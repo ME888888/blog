@@ -246,8 +246,11 @@
             }
             playing = !playing;
         };
-        // Auto-play on page load (will only work if user previously interacted)
-        audio.play().catch(function() {});
+        // Auto-play if coming from index.html "开始研读" button
+        if (localStorage.getItem('autoPlay') === '1') {
+            audio.play().catch(function() {});
+            localStorage.removeItem('autoPlay');
+        }
     </script>
 
 </body>
