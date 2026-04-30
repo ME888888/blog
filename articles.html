@@ -215,5 +215,40 @@
 
     <script src="js/main.js"></script>
 
+    <!-- 背景音乐 -->
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; animation: fadeIn 1.5s ease-out;">
+        <div style="background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-radius: 50px; padding: 10px 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 18px;">🎵</span>
+            <audio id="bgAudio" loop>
+                <source src="https://me888888.github.io/blog/music/background_music.mp3" type="audio/mpeg">
+            </audio>
+            <button id="musicBtn" style="background: var(--primary-color); color: white; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center;">▶</button>
+        </div>
+    </div>
+    <script>
+        var playing = false;
+        var audio = document.getElementById('bgAudio');
+        audio.volume = 0.35;
+        // Try to restore playback position
+        var savedTime = localStorage.getItem('bgAudioTime');
+        if (savedTime) audio.currentTime = parseFloat(savedTime);
+        // Save position periodically
+        setInterval(function() {
+            if (audio.currentTime > 0) localStorage.setItem('bgAudioTime', audio.currentTime);
+        }, 1000);
+        document.getElementById('musicBtn').onclick = function() {
+            if (playing) {
+                audio.pause();
+                this.textContent = '▶';
+            } else {
+                audio.play().catch(function(e) { console.log('Play error:', e); });
+                this.textContent = '⏸';
+            }
+            playing = !playing;
+        };
+        // Auto-play on page load (will only work if user previously interacted)
+        audio.play().catch(function() {});
+    </script>
+
 </body>
 </html>
