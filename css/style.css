@@ -238,7 +238,15 @@ a {
     font-size: 0.9em;
 }
 
-.article-item h3 {
+.
+.shanghan-article {
+    background: var(--bg-white);
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+article-item h3 {
     margin: 8px 0;
 }
 
