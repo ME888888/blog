@@ -69,30 +69,34 @@
     </main>
 
 
-    <!-- 背景音乐 -->
+        <!-- 背景音乐 -->
     <div style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; animation: fadeIn 1.5s ease-out;">
         <div style="background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-radius: 50px; padding: 10px 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 10px;">
             <span style="font-size: 18px;">🎵</span>
-            <audio id="bgAudio" loop style="height: 28px;">
+            <audio id="bgAudio" loop>
                 <source src="https://me888888.github.io/blog/music/background_music.mp3" type="audio/mpeg">
             </audio>
-            <button onclick="toggleMusic()" id="musicBtn" style="background: var(--primary-color); color: white; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center;">▶</button>
+            <button id="musicBtn" style="background: var(--primary-color); color: white; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center;">▶</button>
         </div>
     </div>
     <script>
+        var playing = false;
         var audio = document.getElementById('bgAudio');
         audio.volume = 0.35;
-        var audio = document.getElementById('bgAudio');
-        audio.volume = 0.35;
-        function toggleMusic() {
+        document.getElementById('musicBtn').onclick = function() {
             if (playing) {
                 audio.pause();
-                document.getElementById('musicBtn').textContent = '▶';
+                this.textContent = '▶';
             } else {
-                audio.play().catch(() => {});
-                document.getElementById('musicBtn').textContent = '⏸';
+                audio.play().catch(function(e) { console.log('Play error:', e); });
+                this.textContent = '⏸';
             }
             playing = !playing;
+        };
+        function playMusic() {
+            audio.play().catch(function(e) { console.log('Play error:', e); });
+            document.getElementById('musicBtn').textContent = '⏸';
+            playing = true;
         }
     </script>
 
