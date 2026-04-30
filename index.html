@@ -8,6 +8,35 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<div id="musicNotice" style="background: linear-gradient(90deg, #2d5016, #4a8028); color: white; text-align: center; padding: 12px 20px; font-size: 0.95em; cursor: pointer; position: relative; z-index: 10000; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.3s ease;">
+    <span style="font-size: 1.2em;">🎵</span>
+    <span id="noticeText">点击任意处开启《起风了》背景音乐</span>
+</div>
+<script>
+(function() {
+    var notice = document.getElementById('musicNotice');
+    var audio = document.getElementById('bgAudio');
+    var noticeText = document.getElementById('noticeText');
+    
+    // Check if already enabled
+    if (localStorage.getItem('musicEnabled') === '1') {
+        notice.style.display = 'none';
+        audio.play().catch(function() {});
+    }
+    
+    // Click anywhere on notice to enable music
+    notice.onclick = function() {
+        localStorage.setItem('musicEnabled', '1');
+        notice.style.opacity = '0';
+        notice.style.transform = 'translateY(-100%)';
+        setTimeout(function() { notice.style.display = 'none'; }, 300);
+        audio.volume = 0.35;
+        audio.play().catch(function() {});
+        document.getElementById('musicBtn').textContent = '⏸';
+    };
+})();
+</script>
+
     <header class="header">
         <nav class="nav container">
             <a href="index.html" class="logo">☯ 伤寒论研习</a>
